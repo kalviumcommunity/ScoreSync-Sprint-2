@@ -21,3 +21,18 @@ samples, guidance on mobile development, and a full API reference.
 StatelessWidget is for static UI, StatefulWidget updates dynamically with state changes. Flutter builds UIs using a widget tree, re-rendering only changed parts for efficiency. Dart is ideal for Flutter with object-oriented, null-safe, and async-friendly features. Demo app: Counter App updates instantly with Hot Reload. 
 Screenshots show UI on Android/iOS.
 ![Counter App UI](image.png)
+
+## Flutter Folder Structure (Short)
+
+main.dart – App entry point.
+
+screens/ – App pages (UI screens).
+
+widgets/ – Reusable components.
+
+models/ – Data structures.
+
+services/ – API/Firebase logic.
+
+This structure keeps UI, logic, and data separate, making the app modular and scalable.
+Files use snake_case, classes/widgets use PascalCase, and variables use camelCase.
