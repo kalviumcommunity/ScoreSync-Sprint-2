@@ -1,48 +1,84 @@
-📝 Introduction
+## ScoreSync – Flutter Project Structure Overview
+## Introduction
 
-When a Flutter project is created, it generates a structured set of folders and files. This structure helps organize code, manage assets, and support cross-platform development for Android and iOS. Understanding it ensures clean, scalable, and maintainable applications.
+The ScoreSync Flutter project follows a structured folder organization that separates core application logic from platform-specific configurations. This structure supports clean development, scalability, and efficient teamwork while building a cross-platform sports tournament management app.
 
-📂 Key Folders & Files
+## Key Folders & Their Purpose
 🔹 lib/
 
-Main folder containing all Dart code.
-Includes main.dart (entry point), screens, widgets, models, and services.
+## he main folder containing all Dart source code for ScoreSync.
+Includes:
+
+main.dart → Entry point of the application
+
+screens/ → Match screens, scoreboard UI, player stats pages
+
+widgets/ → Reusable UI components (score cards, buttons, etc.)
+
+models/ → Data models (Player, Match, Tournament)
+
+services/ → Business logic and API integration
 
 🔹 android/
 
-Android-specific build configuration and settings.
+Contains Android-specific build configurations and Gradle files required to run ScoreSync on Android devices.
 
 🔹 ios/
 
-iOS-specific configuration used with Xcode.
+Contains iOS-specific configuration files used to build the app on Apple devices via Xcode.
 
 🔹 assets/
 
-Stores images, fonts, and static files. Must be declared in pubspec.yaml.
+Stores static resources like:
+
+Team logos
+
+Player images
+
+Icons
+
+Fonts
+
+All assets are declared inside pubspec.yaml.
 
 🔹 test/
 
-Contains unit and widget test files.
+Contains test files used to verify UI and app functionality.
 
 🔹 pubspec.yaml
 
-Manages dependencies, assets, fonts, and environment settings.
+The central configuration file used to:
 
-🔹 Other Supporting Files
+Manage dependencies
 
-.gitignore → Files ignored by Git
+Register assets
 
-build/ → Auto-generated build files
+Define app environment settings
+
+🔹 Supporting Files
+
+.gitignore → Prevents unnecessary files from being pushed to Git
+
+build/ → Auto-generated compiled files (not manually edited)
 
 README.md → Project documentation
 
-🗂 Folder Hierarchy Example
-my_flutter_app/
+## Example Folder Hierarchy
+ScoreSync/
  ┣ lib/
+ ┃ ┣ main.dart
+ ┃ ┣ screens/
+ ┃ ┣ widgets/
+ ┃ ┣ models/
+ ┃ ┗ services/
  ┣ android/
  ┣ ios/
- ┣ test/
  ┣ assets/
+ ┣ test/
  ┣ pubspec.yaml
- ┗ README.md
+ ┣ README.md
+ ┗ PROJECT_STRUCTURE.md
 
+## Reflection
+
+Understanding the project structure helps ensure that ScoreSync remains organized and scalable as new features like live scoring, match history, and analytics are added. A clean folder structure improves collaboration in a team environment and makes maintaining cross-platform builds for Android and iOS more efficient.
