@@ -22,7 +22,7 @@ StatelessWidget is for static UI, StatefulWidget updates dynamically with state 
 Screenshots show UI on Android/iOS.
 ![Counter App UI](image.png)
 
-## Flutter Folder Structure (Short)
+## Flutter Folder Structure 
 
 main.dart – App entry point.
 
