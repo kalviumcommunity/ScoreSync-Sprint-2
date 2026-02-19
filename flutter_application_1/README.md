@@ -56,6 +56,12 @@ MaterialApp
                 ┣ ElevatedButton
                 ┗ TextButton
 
+## Screenshots:
+
+![Initial UI state (Likes: 0, default background)](image-1.png)
+
+![Updated UI after button click (Likes incremented / background changed)](image-2.png)
+
 ## Explanation
 
 A widget tree is a hierarchical structure where every UI element in Flutter is a widget arranged as parent and child.
