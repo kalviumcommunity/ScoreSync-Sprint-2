@@ -36,3 +36,30 @@ services/ – API/Firebase logic.
 
 This structure keeps UI, logic, and data separate, making the app modular and scalable.
 Files use snake_case, classes/widgets use PascalCase, and variables use camelCase.
+
+----------
+
+## Widget Tree & Reactive UI Demo
+
+This Flutter app demonstrates the widget tree structure and Flutter’s reactive UI model using a simple profile card with interactive buttons.
+
+## Widget Tree Hierarchy
+MaterialApp
+ ┗ ProfileCard
+    ┗ Scaffold
+       ┣ AppBar
+       ┗ Body
+          ┗ Container
+             ┗ Column
+                ┣ CircleAvatar
+                ┣ Text
+                ┣ ElevatedButton
+                ┗ TextButton
+
+## Explanation
+
+A widget tree is a hierarchical structure where every UI element in Flutter is a widget arranged as parent and child.
+
+Flutter follows a reactive model — when setState() is called, only the affected widgets rebuild instead of the entire UI. This makes the app efficient and smooth.
+
+----------
