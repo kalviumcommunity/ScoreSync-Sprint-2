@@ -14,10 +14,13 @@ dependencies:
   # Cupertino Icons for iOS style icons
   cupertino_icons: ^1.0.8
 
-  # 🔥 Firebase Dependencies (Fixed Versions)
+  # 🔥 Firebase Dependencies
   firebase_core: ^3.6.0
   firebase_auth: ^5.3.0
   cloud_firestore: ^5.4.0
+
+  # ✅ Add this
+  provider: ^6.1.0
 
 dev_dependencies:
   flutter_test:
