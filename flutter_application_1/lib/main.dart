@@ -10,11 +10,31 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: ProfileCard(),
     );
   }
 }
 
+// ----------------------------
+// Stateless Widget (Header)
+// ----------------------------
+class ProfileHeader extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      "Widget Tree Demo",
+      style: TextStyle(
+        fontSize: 24,
+        fontWeight: FontWeight.bold,
+      ),
+    );
+  }
+}
+
+// ----------------------------
+// Stateful Widget
+// ----------------------------
 class ProfileCard extends StatefulWidget {
   @override
   _ProfileCardState createState() => _ProfileCardState();
@@ -40,7 +60,7 @@ class _ProfileCardState extends State<ProfileCard> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Widget Tree Demo"),
+        title: ProfileHeader(), // Using Stateless widget
       ),
       body: Center(
         child: Container(
