@@ -69,3 +69,12 @@ A widget tree is a hierarchical structure where every UI element in Flutter is a
 Flutter follows a reactive model — when setState() is called, only the affected widgets rebuild instead of the entire UI. This makes the app efficient and smooth.
 
 ----------
+
+## 3.14
+
+This Flutter demo showcases the difference between StatelessWidget and StatefulWidget.  
+Stateless widgets are used for static UI elements that do not change during runtime.  
+Stateful widgets manage dynamic data and update the UI using setState().  
+The app demonstrates this with a profile card featuring a like counter and background toggle.
+
+-----------
