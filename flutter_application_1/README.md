@@ -95,3 +95,9 @@ The ProfileCard screen updates likes and background color interactively.
 The app also includes form validation and navigation between screens.
 
 ----------
+
+## 3.22 Creating Reusable Custom Widgets for Modular UI Design
+
+This project demonstrates reusable custom widgets in Flutter to build a modular and scalable UI.
+A `CustomButton` and `InfoCard` widget were created and reused across multiple screens to reduce code duplication.
+This approach improves maintainability, consistency, and development speed in larger applications.
