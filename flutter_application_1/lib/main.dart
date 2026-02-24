@@ -11,7 +11,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: "Widget & Form Demo",
+      title: "Flutter State & Form Demo",
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
@@ -20,25 +20,22 @@ class MyApp extends StatelessWidget {
   }
 }
 
-// ----------------------------
+// ===============================
 // Stateless Widget (Header)
-// ----------------------------
+// ===============================
 class ProfileHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Text(
-      "Widget Tree Demo",
-      style: TextStyle(
-        fontSize: 22,
-        fontWeight: FontWeight.bold,
-      ),
+      "Flutter Demo App",
+      style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
     );
   }
 }
 
-// ----------------------------
-// PROFILE CARD (Stateful)
-// ----------------------------
+// ===============================
+// PROFILE CARD SCREEN
+// ===============================
 class ProfileCard extends StatefulWidget {
   @override
   _ProfileCardState createState() => _ProfileCardState();
@@ -83,8 +80,7 @@ class _ProfileCardState extends State<ProfileCard> {
               const SizedBox(height: 10),
               const Text(
                 "Hamsha",
-                style: TextStyle(
-                    fontSize: 20, fontWeight: FontWeight.bold),
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
               const Text("Flutter Developer"),
               const SizedBox(height: 15),
@@ -100,7 +96,7 @@ class _ProfileCardState extends State<ProfileCard> {
               ),
               const SizedBox(height: 15),
 
-              // NAVIGATION BUTTON
+              // Navigate to Form
               ElevatedButton(
                 onPressed: () {
                   Navigator.push(
@@ -112,6 +108,21 @@ class _ProfileCardState extends State<ProfileCard> {
                 },
                 child: const Text("Go to Form"),
               ),
+
+              const SizedBox(height: 10),
+
+              // Navigate to State Demo
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => StateManagementDemo(),
+                    ),
+                  );
+                },
+                child: const Text("Go to Counter Demo"),
+              ),
             ],
           ),
         ),
@@ -120,9 +131,9 @@ class _ProfileCardState extends State<ProfileCard> {
   }
 }
 
-// ----------------------------
+// ===============================
 // USER INPUT FORM SCREEN
-// ----------------------------
+// ===============================
 class UserInputForm extends StatefulWidget {
   @override
   _UserInputFormState createState() => _UserInputFormState();
@@ -130,7 +141,6 @@ class UserInputForm extends StatefulWidget {
 
 class _UserInputFormState extends State<UserInputForm> {
   final _formKey = GlobalKey<FormState>();
-
   final _nameController = TextEditingController();
   final _emailController = TextEditingController();
 
@@ -148,7 +158,6 @@ class _UserInputFormState extends State<UserInputForm> {
           content: Text("Form Submitted Successfully!"),
         ),
       );
-
       _nameController.clear();
       _emailController.clear();
     }
@@ -201,6 +210,73 @@ class _UserInputFormState extends State<UserInputForm> {
               ElevatedButton(
                 onPressed: submitForm,
                 child: const Text("Submit"),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+// ===============================
+// STATE MANAGEMENT DEMO SCREEN
+// ===============================
+class StateManagementDemo extends StatefulWidget {
+  @override
+  _StateManagementDemoState createState() =>
+      _StateManagementDemoState();
+}
+
+class _StateManagementDemoState extends State<StateManagementDemo> {
+  int _counter = 0;
+
+  void _increment() {
+    setState(() {
+      _counter++;
+    });
+  }
+
+  void _decrement() {
+    setState(() {
+      if (_counter > 0) _counter--;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("State Management Demo"),
+      ),
+      body: Container(
+        color: _counter >= 5 ? Colors.green[100] : Colors.white,
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Text("Counter Value:",
+                  style: TextStyle(fontSize: 18)),
+              const SizedBox(height: 10),
+              Text(
+                "$_counter",
+                style: const TextStyle(
+                    fontSize: 30, fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 25),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  ElevatedButton(
+                    onPressed: _increment,
+                    child: const Text("Increment"),
+                  ),
+                  const SizedBox(width: 15),
+                  ElevatedButton(
+                    onPressed: _decrement,
+                    child: const Text("Decrement"),
+                  ),
+                ],
               ),
             ],
           ),
