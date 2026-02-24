@@ -11,7 +11,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: "Flutter State & Form Demo",
+      title: "Flutter Complete Demo",
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
@@ -64,68 +64,168 @@ class _ProfileCardState extends State<ProfileCard> {
         title: ProfileHeader(),
       ),
       body: Center(
-        child: Container(
-          padding: const EdgeInsets.all(20),
-          decoration: BoxDecoration(
-            color: isBlue ? Colors.blue[100] : Colors.green[100],
-            borderRadius: BorderRadius.circular(12),
-          ),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              const CircleAvatar(
-                radius: 40,
-                child: Icon(Icons.person, size: 40),
-              ),
-              const SizedBox(height: 10),
-              const Text(
-                "Hamsha",
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-              ),
-              const Text("Flutter Developer"),
-              const SizedBox(height: 15),
-              Text("Likes: $likes"),
-              const SizedBox(height: 8),
-              ElevatedButton(
-                onPressed: incrementLikes,
-                child: const Text("Like"),
-              ),
-              TextButton(
-                onPressed: toggleColor,
-                child: const Text("Change Background"),
-              ),
-              const SizedBox(height: 15),
+        child: SingleChildScrollView(
+          child: Container(
+            padding: const EdgeInsets.all(20),
+            decoration: BoxDecoration(
+              color: isBlue ? Colors.blue[100] : Colors.green[100],
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const CircleAvatar(
+                  radius: 40,
+                  child: Icon(Icons.person, size: 40),
+                ),
+                const SizedBox(height: 10),
+                const Text(
+                  "Hamsha",
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                ),
+                const Text("Flutter Developer"),
+                const SizedBox(height: 15),
+                Text("Likes: $likes"),
+                const SizedBox(height: 8),
+                ElevatedButton(
+                  onPressed: incrementLikes,
+                  child: const Text("Like"),
+                ),
+                TextButton(
+                  onPressed: toggleColor,
+                  child: const Text("Change Background"),
+                ),
+                const SizedBox(height: 15),
 
-              // Navigate to Form
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => UserInputForm(),
-                    ),
-                  );
-                },
-                child: const Text("Go to Form"),
-              ),
+                // Navigate to Form
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => UserInputForm(),
+                      ),
+                    );
+                  },
+                  child: const Text("Go to Form"),
+                ),
 
-              const SizedBox(height: 10),
+                const SizedBox(height: 10),
 
-              // Navigate to State Demo
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => StateManagementDemo(),
-                    ),
-                  );
-                },
-                child: const Text("Go to Counter Demo"),
-              ),
-            ],
+                // Navigate to Counter Demo
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => StateManagementDemo(),
+                      ),
+                    );
+                  },
+                  child: const Text("Go to Counter Demo"),
+                ),
+
+                const SizedBox(height: 10),
+
+                // Navigate to Responsive UI
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ResponsiveHome(),
+                      ),
+                    );
+                  },
+                  child: const Text("Go to Responsive UI"),
+                ),
+              ],
+            ),
           ),
         ),
+      ),
+    );
+  }
+}
+
+// ===============================
+// RESPONSIVE HOME SCREEN
+// ===============================
+class ResponsiveHome extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    bool isTablet = screenWidth > 600;
+
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Responsive Mobile UI"),
+      ),
+      body: Column(
+        children: [
+          // HEADER
+          Container(
+            width: double.infinity,
+            padding: EdgeInsets.all(isTablet ? 32 : 16),
+            color: Colors.blue[100],
+            child: Text(
+              "Welcome to Responsive Design",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: isTablet ? 28 : 20,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+
+          // MAIN CONTENT
+          Expanded(
+            child: Padding(
+              padding: EdgeInsets.all(isTablet ? 24 : 12),
+              child: GridView.builder(
+                itemCount: 6,
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: isTablet ? 2 : 1,
+                  crossAxisSpacing: 16,
+                  mainAxisSpacing: 16,
+                ),
+                itemBuilder: (context, index) {
+                  return Container(
+                    decoration: BoxDecoration(
+                      color: Colors.blue[50],
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Center(
+                      child: Text(
+                        "Card ${index + 1}",
+                        style: TextStyle(
+                          fontSize: isTablet ? 22 : 16,
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ),
+          ),
+
+          // FOOTER
+          Padding(
+            padding: const EdgeInsets.all(16),
+            child: SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                onPressed: () {},
+                child: Text(
+                  "Continue",
+                  style: TextStyle(
+                    fontSize: isTablet ? 20 : 16,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
