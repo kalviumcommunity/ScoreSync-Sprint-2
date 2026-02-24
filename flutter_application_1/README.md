@@ -87,3 +87,11 @@ The UserInputForm screen collects name and email input with validation using For
 SnackBar feedback and Navigator.push are used to provide user interaction and screen navigation.
 
 -----------
+
+## 3.21 Managing Local UI State with setState and Stateful Logic
+
+This Flutter app demonstrates Stateless and Stateful widgets with dynamic UI updates using setState().
+The ProfileCard screen updates likes and background color interactively.
+The app also includes form validation and navigation between screens.
+
+----------
