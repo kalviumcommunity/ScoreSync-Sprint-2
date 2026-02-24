@@ -78,3 +78,12 @@ Stateful widgets manage dynamic data and update the UI using setState().
 The app demonstrates this with a profile card featuring a like counter and background toggle.
 
 -----------
+
+## 3.20 Handling User Input with TextFields, Buttons, and Form Widgets:
+
+This Flutter app demonstrates widget tree structure, state management, and user input handling using Forms.
+The ProfileCard screen uses setState to manage likes and background color changes dynamically.
+The UserInputForm screen collects name and email input with validation using Form and TextFormField.
+SnackBar feedback and Navigator.push are used to provide user interaction and screen navigation.
+
+-----------
