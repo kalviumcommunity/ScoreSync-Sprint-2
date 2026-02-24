@@ -10,10 +10,24 @@ class LoginSignupScreen extends StatefulWidget {
 }
 
 class _LoginSignupScreenState extends State<LoginSignupScreen> {
-  final emailController = TextEditingController();
-  final passwordController = TextEditingController();
+  late final TextEditingController emailController;
+  late final TextEditingController passwordController;
 
   bool isLogin = true;
+
+  @override
+  void initState() {
+    super.initState();
+    emailController = TextEditingController();
+    passwordController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
