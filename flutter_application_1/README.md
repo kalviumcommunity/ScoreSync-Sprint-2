@@ -101,3 +101,12 @@ The app also includes form validation and navigation between screens.
 This project demonstrates reusable custom widgets in Flutter to build a modular and scalable UI.
 A `CustomButton` and `InfoCard` widget were created and reused across multiple screens to reduce code duplication.
 This approach improves maintainability, consistency, and development speed in larger applications.
+
+## 3.23 Using MediaQuery and LayoutBuilder for Responsive Design
+
+1. We used **MediaQuery** to get the device screen width and height.
+2. We used **LayoutBuilder** to detect screen size using `constraints.maxWidth`.
+3. We changed the grid layout, padding, and font size for mobile and tablet screens.
+4. This made the app responsive and adaptable to different screen sizes.
+
+![Tablet image](Tablet.png)   ![Phone image](Phone.png)

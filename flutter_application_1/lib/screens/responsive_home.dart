@@ -5,10 +5,9 @@ class ResponsiveHome extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // MediaQuery usage
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
-
-    bool isTablet = screenWidth > 600;
 
     return Scaffold(
       appBar: AppBar(
@@ -16,10 +15,14 @@ class ResponsiveHome extends StatelessWidget {
       ),
       body: LayoutBuilder(
         builder: (context, constraints) {
+
+          // LayoutBuilder usage
+          bool isTablet = constraints.maxWidth > 600;
+
           return Column(
             children: [
 
-              // HEADER
+              // ================= HEADER =================
               Container(
                 width: double.infinity,
                 padding: EdgeInsets.all(isTablet ? 32 : 16),
@@ -34,7 +37,7 @@ class ResponsiveHome extends StatelessWidget {
                 ),
               ),
 
-              // MAIN CONTENT
+              // ================= MAIN CONTENT =================
               Expanded(
                 child: Padding(
                   padding: EdgeInsets.all(isTablet ? 24 : 12),
@@ -42,8 +45,8 @@ class ResponsiveHome extends StatelessWidget {
                     itemCount: 6,
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: isTablet ? 2 : 1,
-                      crossAxisSpacing: 16,
-                      mainAxisSpacing: 16,
+                      crossAxisSpacing: isTablet ? 20 : 12,
+                      mainAxisSpacing: isTablet ? 20 : 12,
                       childAspectRatio: isTablet ? 1.5 : 1,
                     ),
                     itemBuilder: (context, index) {
@@ -53,12 +56,11 @@ class ResponsiveHome extends StatelessWidget {
                           borderRadius: BorderRadius.circular(12),
                         ),
                         child: Center(
-                          child: FittedBox(
-                            child: Text(
-                              "Card ${index + 1}",
-                              style: TextStyle(
-                                fontSize: isTablet ? 22 : 16,
-                              ),
+                          child: Text(
+                            "Card ${index + 1}",
+                            style: TextStyle(
+                              fontSize: isTablet ? 22 : 16,
+                              fontWeight: FontWeight.w500,
                             ),
                           ),
                         ),
@@ -68,11 +70,11 @@ class ResponsiveHome extends StatelessWidget {
                 ),
               ),
 
-              // FOOTER
+              // ================= FOOTER BUTTON =================
               Padding(
-                padding: const EdgeInsets.all(16),
+                padding: EdgeInsets.all(isTablet ? 24 : 16),
                 child: SizedBox(
-                  width: double.infinity,
+                  width: isTablet ? screenWidth * 0.5 : double.infinity,
                   child: ElevatedButton(
                     onPressed: () {},
                     child: Text(
