@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import '../utils/responsive.dart';
 
 /// STATEFUL WIDGET - Dynamic score counter that updates
 /// Used: Display live scores that can be refreshed or updated
+/// ENHANCED: Now responsive with adaptive layouts and sizing
 class CurrentScoresWidget extends StatefulWidget {
   final String team1;
   final String team2;
@@ -46,84 +48,122 @@ class _CurrentScoresWidgetState extends State<CurrentScoresWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final isMobile = Responsive.isMobile(context);
+    final screenWidth = Responsive.screenWidth(context);
+
     return Card(
       elevation: 4,
+      margin: EdgeInsets.symmetric(
+        horizontal: isMobile ? 8.0 : 16.0,
+      ),
       child: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: EdgeInsets.all(isMobile ? 12.0 : 16.0),
         child: Column(
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                // Team 1
-                Column(
-                  children: [
-                    Text(
-                      widget.team1,
-                      style: const TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                      ),
+            // Responsive score display - Row on desktop, Column on small mobile
+            if (isMobile && screenWidth < 400)
+              Column(
+                children: [
+                  _buildTeamScore(context, widget.team1, team1Score, Colors.blue),
+                  const SizedBox(height: 16),
+                  Text(
+                    'VS',
+                    style: TextStyle(
+                      fontSize: Responsive.responsiveFontSize(context,
+                          mobile: 14, tablet: 16, desktop: 18),
+                      fontWeight: FontWeight.bold,
+                      color: Colors.grey,
                     ),
-                    const SizedBox(height: 8),
-                    Text(
-                      '$team1Score',
-                      style: const TextStyle(
-                        fontSize: 48,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.blue,
-                      ),
+                  ),
+                  const SizedBox(height: 16),
+                  _buildTeamScore(context, widget.team2, team2Score, Colors.red),
+                ],
+              )
+            else
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  // Team 1
+                  _buildTeamScore(context, widget.team1, team1Score, Colors.blue),
+                  // VS
+                  const Text(
+                    'VS',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.grey,
                     ),
-                  ],
-                ),
-                // VS
-                const Text(
-                  'VS',
+                  ),
+                  // Team 2
+                  _buildTeamScore(context, widget.team2, team2Score, Colors.red),
+                ],
+              ),
+            SizedBox(height: isMobile ? 12.0 : 20.0),
+            // Refresh button
+            SizedBox(
+              width: isMobile ? double.infinity : 200,
+              child: ElevatedButton.icon(
+                icon: isLoading
+                    ? SizedBox(
+                        height: 16,
+                        width: 16,
+                        child: CircularProgressIndicator(
+                          strokeWidth: 2,
+                          valueColor: AlwaysStoppedAnimation<Color>(
+                            Colors.blue[600]!,
+                          ),
+                        ),
+                      )
+                    : const Icon(Icons.refresh),
+                label: Text(
+                  isLoading ? 'Refreshing...' : 'Refresh Scores',
                   style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.grey,
+                    fontSize: Responsive.responsiveFontSize(context,
+                        mobile: 12, tablet: 14, desktop: 16),
                   ),
                 ),
-                // Team 2
-                Column(
-                  children: [
-                    Text(
-                      widget.team2,
-                      style: const TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    const SizedBox(height: 8),
-                    Text(
-                      '$team2Score',
-                      style: const TextStyle(
-                        fontSize: 48,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.red,
-                      ),
-                    ),
-                  ],
+                onPressed: isLoading ? null : refreshScores,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.blue[600],
+                  foregroundColor: Colors.white,
+                  padding: EdgeInsets.symmetric(
+                    horizontal: isMobile ? 16.0 : 24.0,
+                    vertical: isMobile ? 12.0 : 16.0,
+                  ),
                 ),
-              ],
-            ),
-            const SizedBox(height: 16),
-            // Refresh button
-            ElevatedButton.icon(
-              onPressed: isLoading ? null : refreshScores,
-              icon: isLoading
-                  ? const SizedBox(
-                      height: 16,
-                      width: 16,
-                      child: CircularProgressIndicator(strokeWidth: 2),
-                    )
-                  : const Icon(Icons.refresh),
-              label: Text(isLoading ? 'Refreshing...' : 'Refresh Scores'),
+              ),
             ),
           ],
         ),
       ),
+    );
+  }
+
+  Widget _buildTeamScore(BuildContext context, String teamName, int score,
+      Color scoreColor) {
+    return Column(
+      children: [
+        Text(
+          teamName,
+          style: TextStyle(
+            fontSize: Responsive.responsiveFontSize(context,
+                mobile: 14, tablet: 16, desktop: 18),
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        SizedBox(
+          height: Responsive.isMobile(context) ? 8 : 12,
+        ),
+        Text(
+          '$score',
+          style: TextStyle(
+            fontSize: Responsive.responsiveFontSize(context,
+                mobile: 36, tablet: 42, desktop: 48),
+            fontWeight: FontWeight.bold,
+            color: scoreColor,
+          ),
+        ),
+      ],
     );
   }
 }

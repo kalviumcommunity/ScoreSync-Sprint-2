@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import '../utils/responsive.dart';
 
-/// STATELESS WIDGET - Static header for score display
-/// Used: Shows sport name and last update time (immutable data)
-/// ENHANCED: Now responsive with adaptive font sizes and padding
-class ScoreHeaderWidget extends StatelessWidget {
+/// RESPONSIVE STATELESS WIDGET - Dynamic header for score display
+/// Adapts layout and sizing based on screen dimensions
+class ResponsiveScoreHeaderWidget extends StatelessWidget {
   final String sportName;
   final String lastUpdated;
 
-  const ScoreHeaderWidget({
+  const ResponsiveScoreHeaderWidget({
     super.key,
     required this.sportName,
     required this.lastUpdated,
@@ -17,19 +16,20 @@ class ScoreHeaderWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isMobile = Responsive.isMobile(context);
+    final isTablet = Responsive.isTablet(context);
 
-    return Container(
-      padding: EdgeInsets.all(isMobile ? 12.0 : 16.0),
+    return ResponsiveContainer(
+      backgroundColor: Colors.blue[600],
+      borderRadius: 8.0,
+      padding: EdgeInsets.all(isMobile ? 12.0 : isTablet ? 16.0 : 20.0),
       margin: EdgeInsets.symmetric(
         horizontal: isMobile ? 8.0 : 16.0,
-      ),
-      decoration: BoxDecoration(
-        color: Colors.blue[600],
-        borderRadius: BorderRadius.circular(8),
+        vertical: 8.0,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          // Sport name with responsive font
           Text(
             sportName,
             style: TextStyle(
@@ -39,7 +39,12 @@ class ScoreHeaderWidget extends StatelessWidget {
               color: Colors.white,
             ),
           ),
-          SizedBox(height: isMobile ? 4 : 8),
+          ResponsiveSpacer(
+            mobileHeight: 4,
+            tabletHeight: 8,
+            desktopHeight: 12,
+          ),
+          // Last updated with responsive font
           Text(
             'Last Updated: $lastUpdated',
             style: TextStyle(
