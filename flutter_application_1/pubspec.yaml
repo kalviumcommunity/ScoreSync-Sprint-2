@@ -21,7 +21,6 @@ flutter:
 
   uses-material-design: true
 
-  # ✅ ADD THIS SECTION
   assets:
     - assets/images/
     - assets/icons/
