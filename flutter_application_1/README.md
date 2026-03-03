@@ -1,10 +1,83 @@
-# flutter_application_1
+# ScoreSync — Flutter + Firebase App
 
-A new Flutter project.
+A Flutter project demonstrating Firebase Authentication, Cloud Firestore real-time sync, and Firebase Storage integration.
 
-## Getting Started
+---
 
-This project is a starting point for a Flutter application.
+## Firebase Setup Steps
+
+1. Go to [Firebase Console](https://console.firebase.google.com/) and create a project.
+2. Add your Android / iOS / Web app inside the project.
+3. Download `google-services.json` (Android) or `GoogleService-Info.plist` (iOS) and place them in the correct folders.
+4. Run `flutterfire configure` to auto-generate `firebase_options.dart`.
+5. Add dependencies to `pubspec.yaml`:
+
+```yaml
+firebase_core: ^3.0.0
+firebase_auth: ^5.0.0
+cloud_firestore: ^5.0.0
+firebase_storage: ^12.0.0
+```
+
+6. Initialize Firebase in `main.dart`:
+
+```dart
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  runApp(MyApp());
+}
+```
+
+---
+
+## How Firestore Real-Time Sync Works
+
+Cloud Firestore uses **persistent WebSocket connections** to push data to all connected clients the moment a document changes — no manual refresh or polling needed.
+
+In this app:
+- `FirestoreService.getTasks()` returns a `Stream<QuerySnapshot>`.
+- The `StreamBuilder` widget in `TasksScreen` listens to that stream.
+- When any user adds or deletes a task, **every connected device updates instantly** because the stream emits a new event.
+
+This is the key difference from a regular REST API — Firestore is *reactive by default*.
+
+---
+
+## Firebase Services Used
+
+| Service | Purpose in this app |
+|---|---|
+| **Firebase Auth** | Email/password sign up and login, session persistence |
+| **Cloud Firestore** | Real-time task list — add and delete tasks synced live |
+| **Firebase Storage** | (Integrated) File/image uploads to cloud storage |
+
+---
+
+## How Firebase Solves the Syncly Problem
+
+The case study described a to-do app where updates took minutes to appear across devices. Firebase solves this with three services working together:
+
+- **Firebase Auth** — Secure, session-persistent login so users never get logged out unexpectedly.
+- **Cloud Firestore** — Real-time listeners mean data appears instantly on all devices without any manual sync code.
+- **Firebase Storage** — Scalable file hosting, so image uploads don't slow down the app or require a separate server.
+
+Together, these eliminate the need for a custom backend entirely.
+
+---
+
+## Running the App
+
+```bash
+flutter pub get
+flutter run -d chrome   # or -d macos
+```
+
+---
+
+
 
 A few resources to get you started if this is your first Flutter project:
 

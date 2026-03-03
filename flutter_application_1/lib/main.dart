@@ -1,13 +1,21 @@
 // ignore_for_file: use_key_in_widget_constructors, library_private_types_in_public_api
 
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
+import 'firebase_options.dart';
 import 'widgets/custom_button.dart';
 import 'widgets/info_card.dart';
-import 'screens/asset_demo_screen.dart'; // ✅ Asset screen import
+import 'screens/asset_demo_screen.dart';
+import 'auth/login_signup.dart';
+import 'pages/tasks_screen.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(MyApp());
 }
 
@@ -16,11 +24,35 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: "Flutter Modular Demo",
-      home: ProfileCard(),
+      title: "ScoreSync",
+      home: AuthWrapper(),
     );
   }
 }
+
+// Shows Login screen if not logged in, Tasks screen if logged in
+class AuthWrapper extends StatelessWidget {
+  const AuthWrapper({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return StreamBuilder<User?>(
+      stream: FirebaseAuth.instance.authStateChanges(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Scaffold(
+            body: Center(child: CircularProgressIndicator()),
+          );
+        }
+        if (snapshot.hasData) {
+          return const TasksScreen(); // user is logged in
+        }
+        return const LoginSignupScreen(); // user is not logged in
+      },
+    );
+  }
+}
+
 
 // ================= PROFILE SCREEN =================
 class ProfileCard extends StatefulWidget {
