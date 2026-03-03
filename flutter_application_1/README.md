@@ -102,6 +102,8 @@ This project demonstrates reusable custom widgets in Flutter to build a modular 
 A `CustomButton` and `InfoCard` widget were created and reused across multiple screens to reduce code duplication.
 This approach improves maintainability, consistency, and development speed in larger applications.
 
+----------
+
 ## 3.23 Using MediaQuery and LayoutBuilder for Responsive Design
 
 1. We used **MediaQuery** to get the device screen width and height.
@@ -110,3 +112,15 @@ This approach improves maintainability, consistency, and development speed in la
 4. This made the app responsive and adaptable to different screen sizes.
 
 ![Tablet image](Tablet.png)   ![Phone image](Phone.png)
+
+----------
+
+## 3.24 Managing Images, Icons, and Local Assets in Flutter Projects
+
+• Created an assets folder and organized images properly inside the project.
+• Registered assets in pubspec.yaml and used Image.asset() to display local images.
+• Implemented Material and Cupertino icons to enhance the UI design.
+
+![asset output](<Screenshot (581).png>) ![Structure](<Folder structure.png>)  ![pubsec.yaml](<Screenshot (583).png>)
+
+----------

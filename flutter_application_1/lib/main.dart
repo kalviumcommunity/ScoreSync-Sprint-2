@@ -1,8 +1,11 @@
 // ignore_for_file: use_key_in_widget_constructors, library_private_types_in_public_api
 
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
+
 import 'widgets/custom_button.dart';
 import 'widgets/info_card.dart';
+import 'screens/asset_demo_screen.dart'; // ✅ Asset screen import
 
 void main() {
   runApp(MyApp());
@@ -11,10 +14,9 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       debugShowCheckedModeBanner: false,
       title: "Flutter Modular Demo",
-      theme: ThemeData(primarySwatch: Colors.blue),
       home: ProfileCard(),
     );
   }
@@ -22,6 +24,8 @@ class MyApp extends StatelessWidget {
 
 // ================= PROFILE SCREEN =================
 class ProfileCard extends StatefulWidget {
+  const ProfileCard({super.key});
+
   @override
   _ProfileCardState createState() => _ProfileCardState();
 }
@@ -52,13 +56,18 @@ class _ProfileCardState extends State<ProfileCard> {
           color: isBlue ? Colors.blue[50] : Colors.green[50],
           child: Column(
             children: [
+
               const InfoCard(
                 title: "Hamsha",
                 subtitle: "Flutter Developer",
                 icon: Icons.person,
               ),
 
-              Text("Likes: $likes"),
+              const SizedBox(height: 20),
+
+              Text("Likes: $likes",
+                  style: const TextStyle(fontSize: 18)),
+
               const SizedBox(height: 10),
 
               CustomButton(
@@ -102,6 +111,19 @@ class _ProfileCardState extends State<ProfileCard> {
                   );
                 },
               ),
+
+              // ✅ NEW BUTTON FOR ASSET DEMO
+              CustomButton(
+                label: "Go to Assets Demo",
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (_) => const AssetDemoScreen()),
+                  );
+                },
+                color: Colors.teal,
+              ),
             ],
           ),
         ),
@@ -112,6 +134,8 @@ class _ProfileCardState extends State<ProfileCard> {
 
 // ================= RESPONSIVE SCREEN =================
 class ResponsiveHome extends StatelessWidget {
+  const ResponsiveHome({super.key});
+
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
@@ -133,7 +157,11 @@ class ResponsiveHome extends StatelessWidget {
               children: List.generate(
                 4,
                 (index) => Card(
-                  child: Center(child: Text("Card ${index + 1}")),
+                  child: Center(
+                      child: Text(
+                    "Card ${index + 1}",
+                    style: const TextStyle(fontSize: 18),
+                  )),
                 ),
               ),
             ),
@@ -156,11 +184,9 @@ class _UserInputFormState extends State<UserInputForm> {
   final _emailController = TextEditingController();
 
   void submitForm() {
-    if (_formKey.currentState!.validate()) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Form Submitted Successfully!")),
-      );
-    }
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text("Form Submitted Successfully!")),
+    );
   }
 
   @override
@@ -213,7 +239,8 @@ class _StateManagementDemoState extends State<StateManagementDemo> {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text("Counter: $counter", style: const TextStyle(fontSize: 22)),
+          Text("Counter: $counter",
+              style: const TextStyle(fontSize: 22)),
           const SizedBox(height: 20),
           CustomButton(label: "Increment", onPressed: increment),
           CustomButton(
