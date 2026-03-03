@@ -16,7 +16,6 @@ A Flutter project demonstrating Firebase Authentication, Cloud Firestore real-ti
 firebase_core: ^3.0.0
 firebase_auth: ^5.0.0
 cloud_firestore: ^5.0.0
-firebase_storage: ^12.0.0
 ```
 
 6. Initialize Firebase in `main.dart`:
@@ -52,7 +51,7 @@ This is the key difference from a regular REST API — Firestore is *reactive by
 |---|---|
 | **Firebase Auth** | Email/password sign up and login, session persistence |
 | **Cloud Firestore** | Real-time task list — add and delete tasks synced live |
-| **Firebase Storage** | (Integrated) File/image uploads to cloud storage |
+| **Firebase Storage** | Not used — requires Blaze (paid) plan. Auth + Firestore cover all assignment requirements. |
 
 ---
 
