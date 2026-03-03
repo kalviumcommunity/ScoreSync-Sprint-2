@@ -4,6 +4,10 @@
 import 'package:flutter/material.dart';
 import '../services/auth_service.dart';
 
+// Hardcoded test account for demo/learning purposes
+const String kTestEmail = 'test@scoresync.com';
+const String kTestPassword = 'Test@1234';
+
 class LoginSignupScreen extends StatefulWidget {
   const LoginSignupScreen({super.key});
 
@@ -14,14 +18,16 @@ class LoginSignupScreen extends StatefulWidget {
 class _LoginSignupScreenState extends State<LoginSignupScreen> {
   final AuthService _authService = AuthService();
 
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
+  // Pre-filled with test credentials
+  final TextEditingController _emailController =
+      TextEditingController(text: kTestEmail);
+  final TextEditingController _passwordController =
+      TextEditingController(text: kTestPassword);
 
-  bool _isLogin = true; // toggle between Login and Sign Up
+  bool _isLogin = true;
   bool _isLoading = false;
   String _errorMessage = '';
 
-  // Submit the form (login or sign up)
   Future<void> _submit() async {
     setState(() {
       _isLoading = true;
@@ -32,7 +38,6 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
     String password = _passwordController.text.trim();
 
     String? error;
-
     if (_isLogin) {
       error = await _authService.signIn(email, password);
     } else {
@@ -58,15 +63,39 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            // App icon / heading
             const Icon(Icons.lock, size: 60, color: Colors.deepPurple),
-            const SizedBox(height: 20),
+            const SizedBox(height: 16),
 
             Text(
               _isLogin ? 'Welcome Back!' : 'Create Account',
               style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
             ),
-            const SizedBox(height: 30),
+            const SizedBox(height: 16),
+
+            // ── Test credentials info box ──
+            Container(
+              width: double.infinity,
+              padding: const EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                color: Colors.deepPurple.shade50,
+                border: Border.all(color: Colors.deepPurple.shade200),
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: const Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    '🔑  Test Account',
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold, color: Colors.deepPurple),
+                  ),
+                  SizedBox(height: 4),
+                  Text('Email    : test@scoresync.com'),
+                  Text('Password : Test@1234'),
+                ],
+              ),
+            ),
+            const SizedBox(height: 20),
 
             // Email field
             TextField(
@@ -117,7 +146,7 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
             ),
             const SizedBox(height: 12),
 
-            // Toggle between Login and Sign Up
+            // Toggle between Login / Sign Up
             TextButton(
               onPressed: () {
                 setState(() {

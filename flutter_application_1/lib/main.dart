@@ -45,7 +45,7 @@ class AuthWrapper extends StatelessWidget {
           );
         }
         if (snapshot.hasData) {
-          return const TasksScreen(); // user is logged in
+          return const ProfileCard(); // user is logged in → old app
         }
         return const LoginSignupScreen(); // user is not logged in
       },
@@ -81,7 +81,16 @@ class _ProfileCardState extends State<ProfileCard> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Profile")),
+      appBar: AppBar(
+        title: const Text("Profile"),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.logout),
+            tooltip: 'Sign Out',
+            onPressed: () => FirebaseAuth.instance.signOut(),
+          ),
+        ],
+      ),
       body: SingleChildScrollView(
         child: Container(
           padding: const EdgeInsets.all(20),
@@ -155,6 +164,18 @@ class _ProfileCardState extends State<ProfileCard> {
                   );
                 },
                 color: Colors.teal,
+              ),
+
+              // 🔥 FIREBASE TASKS
+              CustomButton(
+                label: "Firebase Tasks",
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (_) => const TasksScreen()),
+                  );
+                },
+                color: Colors.deepPurple,
               ),
             ],
           ),
