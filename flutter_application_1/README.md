@@ -121,6 +121,6 @@ This approach improves maintainability, consistency, and development speed in la
 • Registered assets in pubspec.yaml and used Image.asset() to display local images.
 • Implemented Material and Cupertino icons to enhance the UI design.
 
-![asset output](<Screenshot (581).png>) ![Structure](<Folder structure.png>)  ![pubsec.yaml](<Screenshot (583).png>)
+![APP UI](<Screenshot (582).png>) ![Structure](<Folder structure.png>)  ![pubsec.yaml](<Screenshot (583).png>)
 
 ----------
