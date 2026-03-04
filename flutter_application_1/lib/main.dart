@@ -19,6 +19,7 @@ import 'auth/login_signup.dart';
 import 'pages/tasks_screen.dart';
 import 'screens/form_validation_screen.dart';
 import 'screens/live_items_screen.dart';
+import 'screens/quick_tabs_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -240,6 +241,13 @@ class _ProfileCardState extends State<ProfileCard> {
                 onPressed: () =>
                     navigateWithAnimation(context, const LiveItemsScreen()),
                 color: Colors.teal,
+              ),
+
+              CustomButton(
+                label: "QuickTabs Nav",
+                onPressed: () =>
+                    navigateWithAnimation(context, const QuickTabsScreen()),
+                color: Colors.blueAccent,
               ),
             ],
           ),
