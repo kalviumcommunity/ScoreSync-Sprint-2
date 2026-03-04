@@ -10,6 +10,8 @@ import 'widgets/info_card.dart';
 import 'screens/asset_demo_screen.dart';
 import 'screens/scrollable_views.dart';
 import 'screens/animations_screen.dart';
+import 'screens/home_screen.dart';
+import 'screens/details_screen.dart';
 import 'auth/login_signup.dart';
 import 'pages/tasks_screen.dart';
 
@@ -24,10 +26,14 @@ void main() async {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: "ScoreSync",
-      home: AuthWrapper(),
+      home: const AuthWrapper(),
+      routes: {
+        '/home': (context) => const HomeScreen(),
+        '/details': (context) => const DetailsScreen(),
+      },
     );
   }
 }
@@ -194,7 +200,20 @@ class _ProfileCardState extends State<ProfileCard> {
                 color: Colors.deepOrange,
               ),
 
-              // 🔥 FIREBASE TASKS
+              // �️ NAVIGATION DEMO
+              CustomButton(
+                label: "Navigation Demo",
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (_) => const HomeScreen()),
+                  );
+                },
+                color: Colors.teal,
+              ),
+
+              // �🔥 FIREBASE TASKS
               CustomButton(
                 label: "Firebase Tasks",
                 onPressed: () {
