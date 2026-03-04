@@ -20,6 +20,7 @@ import 'pages/tasks_screen.dart';
 import 'screens/form_validation_screen.dart';
 import 'screens/live_items_screen.dart';
 import 'screens/quick_tabs_screen.dart';
+import 'screens/theme_switcher_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -248,6 +249,13 @@ class _ProfileCardState extends State<ProfileCard> {
                 onPressed: () =>
                     navigateWithAnimation(context, const QuickTabsScreen()),
                 color: Colors.blueAccent,
+              ),
+
+              CustomButton(
+                label: "Theme Switcher",
+                onPressed: () =>
+                    navigateWithAnimation(context, const ThemeSwitcherScreen()),
+                color: Colors.purple,
               ),
             ],
           ),
