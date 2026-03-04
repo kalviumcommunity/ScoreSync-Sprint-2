@@ -7,9 +7,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'firebase_options.dart';
 import 'widgets/custom_button.dart';
 import 'widgets/info_card.dart';
-import 'screens/asset_demo_screen.dart'; // ✅ Asset screen import
-import 'screens/scrollable_views.dart';
 import 'screens/asset_demo_screen.dart';
+import 'screens/scrollable_views.dart';
+import 'screens/animations_screen.dart';
 import 'auth/login_signup.dart';
 import 'pages/tasks_screen.dart';
 
@@ -179,6 +179,21 @@ class _ProfileCardState extends State<ProfileCard> {
                   );
                 },
                 color: Colors.indigo,
+              ),
+
+              // 🎬 ANIMATIONS
+              CustomButton(
+                label: "Animations",
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (_) => const AnimationsScreen()),
+                  );
+                },
+                color: Colors.deepOrange,
+              ),
+
               // 🔥 FIREBASE TASKS
               CustomButton(
                 label: "Firebase Tasks",
