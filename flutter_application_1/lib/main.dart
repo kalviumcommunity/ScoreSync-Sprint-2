@@ -18,6 +18,7 @@ import 'screens/details_screen.dart';
 import 'auth/login_signup.dart';
 import 'pages/tasks_screen.dart';
 import 'screens/form_validation_screen.dart';
+import 'screens/live_items_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -232,6 +233,13 @@ class _ProfileCardState extends State<ProfileCard> {
                 onPressed: () =>
                     navigateWithAnimation(context, const FormValidationScreen()),
                 color: Colors.cyan,
+              ),
+
+              CustomButton(
+                label: "Live Items Viewer",
+                onPressed: () =>
+                    navigateWithAnimation(context, const LiveItemsScreen()),
+                color: Colors.teal,
               ),
             ],
           ),
