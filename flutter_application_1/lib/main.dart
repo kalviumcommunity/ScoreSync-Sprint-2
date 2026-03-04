@@ -17,6 +17,7 @@ import 'screens/home_screen.dart';
 import 'screens/details_screen.dart';
 import 'auth/login_signup.dart';
 import 'pages/tasks_screen.dart';
+import 'screens/form_validation_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -224,6 +225,13 @@ class _ProfileCardState extends State<ProfileCard> {
                 onPressed: () =>
                     navigateWithAnimation(context, const TasksScreen()),
                 color: Colors.deepPurple,
+              ),
+
+              CustomButton(
+                label: "Profile Form",
+                onPressed: () =>
+                    navigateWithAnimation(context, const FormValidationScreen()),
+                color: Colors.cyan,
               ),
             ],
           ),
