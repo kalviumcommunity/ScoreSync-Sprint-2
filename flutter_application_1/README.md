@@ -196,3 +196,12 @@ This approach improves maintainability, consistency, and development speed in la
 ![asset output](<Screenshot (581).png>) ![Structure](<Folder structure.png>)  ![pubsec.yaml](<Screenshot (583).png>)
 
 ----------
+
+## 3.25 Adding Animations and Transitions to Improve User Experience
+
+Implemented AnimatedContainer for smooth background color transitions.
+Used AnimatedScale to create a responsive button press effect.
+Added custom SlideTransition using PageRouteBuilder for smooth screen navigation.
+These animations improve user experience by making interactions feel natural and responsive.
+
+----------

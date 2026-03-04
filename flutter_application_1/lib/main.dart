@@ -3,6 +3,9 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_application_1/screens/responsive_home.dart' show ResponsiveHome;
+import 'package:flutter_application_1/screens/state_management_demo.dart' show StateManagementDemo;
+import 'package:flutter_application_1/screens/user_input_form.dart' show UserInputForm;
 
 import 'firebase_options.dart';
 import 'widgets/custom_button.dart';
@@ -38,7 +41,8 @@ class MyApp extends StatelessWidget {
   }
 }
 
-// Shows Login screen if not logged in, Tasks screen if logged in
+// ================= AUTH WRAPPER =================
+
 class AuthWrapper extends StatelessWidget {
   const AuthWrapper({super.key});
 
@@ -53,16 +57,16 @@ class AuthWrapper extends StatelessWidget {
           );
         }
         if (snapshot.hasData) {
-          return const ProfileCard(); // user is logged in → old app
+          return const ProfileCard();
         }
-        return const LoginSignupScreen(); // user is not logged in
+        return const LoginSignupScreen();
       },
     );
   }
 }
 
-
 // ================= PROFILE SCREEN =================
+
 class ProfileCard extends StatefulWidget {
   const ProfileCard({super.key});
 
@@ -73,10 +77,18 @@ class ProfileCard extends StatefulWidget {
 class _ProfileCardState extends State<ProfileCard> {
   int likes = 0;
   bool isBlue = true;
+  bool isPressed = false;
 
   void incrementLikes() {
     setState(() {
       likes++;
+      isPressed = true;
+    });
+
+    Future.delayed(const Duration(milliseconds: 150), () {
+      setState(() {
+        isPressed = false;
+      });
     });
   }
 
@@ -84,6 +96,29 @@ class _ProfileCardState extends State<ProfileCard> {
     setState(() {
       isBlue = !isBlue;
     });
+  }
+
+  // 🔹 Custom Slide Transition
+  void navigateWithAnimation(BuildContext context, Widget page) {
+    Navigator.push(
+      context,
+      PageRouteBuilder(
+        transitionDuration: const Duration(milliseconds: 500),
+        pageBuilder: (_, animation, __) => page,
+        transitionsBuilder: (_, animation, __, child) {
+          return SlideTransition(
+            position: Tween<Offset>(
+              begin: const Offset(1, 0),
+              end: Offset.zero,
+            ).animate(CurvedAnimation(
+              parent: animation,
+              curve: Curves.easeInOut,
+            )),
+            child: child,
+          );
+        },
+      ),
+    );
   }
 
   @override
@@ -94,13 +129,15 @@ class _ProfileCardState extends State<ProfileCard> {
         actions: [
           IconButton(
             icon: const Icon(Icons.logout),
-            tooltip: 'Sign Out',
             onPressed: () => FirebaseAuth.instance.signOut(),
           ),
         ],
       ),
       body: SingleChildScrollView(
-        child: Container(
+        child: AnimatedContainer(
+          // 🔥 Animated Background
+          duration: const Duration(milliseconds: 500),
+          curve: Curves.easeInOut,
           padding: const EdgeInsets.all(20),
           color: isBlue ? Colors.blue[50] : Colors.green[50],
           child: Column(
@@ -119,10 +156,15 @@ class _ProfileCardState extends State<ProfileCard> {
 
               const SizedBox(height: 10),
 
-              CustomButton(
-                label: "Like",
-                onPressed: incrementLikes,
-                color: Colors.pink,
+              // 🔥 Animated Like Button
+              AnimatedScale(
+                scale: isPressed ? 0.9 : 1.0,
+                duration: const Duration(milliseconds: 150),
+                child: CustomButton(
+                  label: "Like",
+                  onPressed: incrementLikes,
+                  color: Colors.pink,
+                ),
               ),
 
               CustomButton(
@@ -133,221 +175,59 @@ class _ProfileCardState extends State<ProfileCard> {
 
               CustomButton(
                 label: "Go to Form",
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (_) => UserInputForm()),
-                  );
-                },
+                onPressed: () =>
+                    navigateWithAnimation(context, UserInputForm()),
               ),
 
               CustomButton(
                 label: "Go to Counter Demo",
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (_) => StateManagementDemo()),
-                  );
-                },
+                onPressed: () =>
+                    navigateWithAnimation(context, StateManagementDemo()),
               ),
 
               CustomButton(
                 label: "Go to Responsive UI",
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (_) => ResponsiveHome()),
-                  );
-                },
+                onPressed: () =>
+                    navigateWithAnimation(context, const ResponsiveHome()),
               ),
 
-              // ✅ NEW BUTTON FOR ASSET DEMO
               CustomButton(
                 label: "Go to Assets Demo",
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (_) => const AssetDemoScreen()),
-                  );
-                },
+                onPressed: () =>
+                    navigateWithAnimation(context, const AssetDemoScreen()),
                 color: Colors.teal,
               ),
 
-              // 📜 SCROLLABLE VIEWS
               CustomButton(
                 label: "Scrollable Views",
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (_) => const ScrollableViews()),
-                  );
-                },
+                onPressed: () =>
+                    navigateWithAnimation(context, const ScrollableViews()),
                 color: Colors.indigo,
               ),
 
-              // 🎬 ANIMATIONS
               CustomButton(
                 label: "Animations",
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (_) => const AnimationsScreen()),
-                  );
-                },
+                onPressed: () =>
+                    navigateWithAnimation(context, const AnimationsScreen()),
                 color: Colors.deepOrange,
               ),
 
-              // �️ NAVIGATION DEMO
               CustomButton(
                 label: "Navigation Demo",
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (_) => const HomeScreen()),
-                  );
-                },
+                onPressed: () =>
+                    navigateWithAnimation(context, const HomeScreen()),
                 color: Colors.teal,
               ),
 
-              // �🔥 FIREBASE TASKS
               CustomButton(
                 label: "Firebase Tasks",
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (_) => const TasksScreen()),
-                  );
-                },
+                onPressed: () =>
+                    navigateWithAnimation(context, const TasksScreen()),
                 color: Colors.deepPurple,
               ),
             ],
           ),
         ),
-      ),
-    );
-  }
-}
-
-// ================= RESPONSIVE SCREEN =================
-class ResponsiveHome extends StatelessWidget {
-  const ResponsiveHome({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    double screenWidth = MediaQuery.of(context).size.width;
-    bool isTablet = screenWidth > 600;
-
-    return Scaffold(
-      appBar: AppBar(title: const Text("Responsive UI")),
-      body: Column(
-        children: [
-          InfoCard(
-            title: "Responsive Layout",
-            subtitle: isTablet ? "Tablet Mode" : "Phone Mode",
-            icon: Icons.devices,
-          ),
-          Expanded(
-            child: GridView.count(
-              crossAxisCount: isTablet ? 2 : 1,
-              padding: const EdgeInsets.all(16),
-              children: List.generate(
-                4,
-                (index) => Card(
-                  child: Center(
-                      child: Text(
-                    "Card ${index + 1}",
-                    style: const TextStyle(fontSize: 18),
-                  )),
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-// ================= FORM SCREEN =================
-class UserInputForm extends StatefulWidget {
-  @override
-  _UserInputFormState createState() => _UserInputFormState();
-}
-
-class _UserInputFormState extends State<UserInputForm> {
-  final _formKey = GlobalKey<FormState>();
-  final _nameController = TextEditingController();
-  final _emailController = TextEditingController();
-
-  void submitForm() {
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text("Form Submitted Successfully!")),
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text("User Input Form")),
-      body: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          children: [
-            TextFormField(
-              controller: _nameController,
-              decoration: const InputDecoration(labelText: "Name"),
-            ),
-            const SizedBox(height: 15),
-            TextFormField(
-              controller: _emailController,
-              decoration: const InputDecoration(labelText: "Email"),
-            ),
-            const SizedBox(height: 20),
-            CustomButton(
-              label: "Submit",
-              onPressed: submitForm,
-              color: Colors.green,
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-// ================= COUNTER SCREEN =================
-class StateManagementDemo extends StatefulWidget {
-  @override
-  _StateManagementDemoState createState() =>
-      _StateManagementDemoState();
-}
-
-class _StateManagementDemoState extends State<StateManagementDemo> {
-  int counter = 0;
-
-  void increment() => setState(() => counter++);
-  void decrement() => setState(() => counter--);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text("Counter Demo")),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text("Counter: $counter",
-              style: const TextStyle(fontSize: 22)),
-          const SizedBox(height: 20),
-          CustomButton(label: "Increment", onPressed: increment),
-          CustomButton(
-              label: "Decrement",
-              onPressed: decrement,
-              color: Colors.red),
-        ],
       ),
     );
   }
