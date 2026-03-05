@@ -13,7 +13,7 @@ import 'package:flutter_application_1/main.dart';
 void main() {
   testWidgets('Login screen renders correctly', (WidgetTester tester) async {
     // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
+    await tester.pumpWidget(MyApp());
 
     // Verify that the login screen is displayed.
     expect(find.text('Login'), findsWidgets);
