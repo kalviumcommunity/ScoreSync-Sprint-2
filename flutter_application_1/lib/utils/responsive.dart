@@ -177,6 +177,121 @@ class ResponsiveContainer extends StatelessWidget {
   }
 }
 
+/// Build a responsive widget using LayoutBuilder
+/// Selects mobile/tablet/desktop layout based on screen width
+class ResponsiveBuilder extends StatelessWidget {
+  final Widget Function(BuildContext, BoxConstraints) mobileBuild;
+  final Widget Function(BuildContext, BoxConstraints) tabletBuild;
+  final Widget Function(BuildContext, BoxConstraints) desktopBuild;
+
+  const ResponsiveBuilder({
+    super.key,
+    required this.mobileBuild,
+    required this.tabletBuild,
+    required this.desktopBuild,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        if (Responsive.isDesktop(context)) {
+          return desktopBuild(context, constraints);
+        } else if (Responsive.isTablet(context)) {
+          return tabletBuild(context, constraints);
+        } else {
+          return mobileBuild(context, constraints);
+        }
+      },
+    );
+  }
+}
+
+/// Get responsive dimensions based on current screen size
+Map<String, double> getResponsiveDimensions(BuildContext context) {
+  final screenWidth = Responsive.screenWidth(context);
+  final screenHeight = Responsive.screenHeight(context);
+
+  late double containerWidth;
+  late double containerHeight;
+  late double padding;
+  late double fontSize;
+  late int crossAxisCount;
+
+  if (Responsive.isMobile(context)) {
+    containerWidth = screenWidth * 0.9;
+    containerHeight = screenHeight * 0.6;
+    padding = 12.0;
+    fontSize = 14.0;
+    crossAxisCount = 1;
+  } else if (Responsive.isTablet(context)) {
+    containerWidth = screenWidth * 0.85;
+    containerHeight = screenHeight * 0.7;
+    padding = 16.0;
+    fontSize = 16.0;
+    crossAxisCount = 2;
+  } else {
+    containerWidth = 1000.0;
+    containerHeight = screenHeight * 0.8;
+    padding = 24.0;
+    fontSize = 18.0;
+    crossAxisCount = 3;
+  }
+
+  return {
+    'containerWidth': containerWidth,
+    'containerHeight': containerHeight,
+    'padding': padding,
+    'fontSize': fontSize,
+    'crossAxisCount': crossAxisCount.toDouble(),
+    'screenWidth': screenWidth,
+    'screenHeight': screenHeight,
+  };
+}
+
+/// Responsive auth form wrapper with adaptive padding and constraints
+class ResponsiveAuthForm extends StatelessWidget {
+  final Widget Function(BoxConstraints) formBuilder;
+
+  const ResponsiveAuthForm({
+    super.key,
+    required this.formBuilder,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final isSmallScreen = Responsive.isMobile(context);
+
+        return SingleChildScrollView(
+          child: ConstrainedBox(
+            constraints: BoxConstraints(
+              minHeight: constraints.maxHeight,
+            ),
+            child: IntrinsicHeight(
+              child: Padding(
+                padding: EdgeInsets.symmetric(
+                  horizontal: isSmallScreen ? 16.0 : 32.0,
+                  vertical: isSmallScreen ? 16.0 : 24.0,
+                ),
+                child: Center(
+                  child: ConstrainedBox(
+                    constraints: BoxConstraints(
+                      maxWidth: isSmallScreen ? double.infinity : 500.0,
+                    ),
+                    child: formBuilder(constraints),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+}
+
 /// Responsive spacer widget
 class ResponsiveSpacer extends StatelessWidget {
   final double mobileHeight;
