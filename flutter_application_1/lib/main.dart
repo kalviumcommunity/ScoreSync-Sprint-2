@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_application_1/screens/stateless_stateful_demo.dart';
+import 'package:flutter_application_1/pages/tabs/home.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -109,6 +110,18 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
     return Scaffold(
       appBar: AppBar(
         title: const ProfileHeader(),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.science),
+            tooltip: 'Widget Demo',
+            onPressed: () {
+              Navigator.push(
+                context,
+                FadeSlideRoute(page: const StatelessStatefulDemo()),
+              );
+            },
+          ),
+        ],
       ),
       body: FadeTransition(
         opacity: _fadeAnimation,
@@ -117,14 +130,35 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
           child: const ProfileCard(),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(
-            context,
-            FadeSlideRoute(page: const StatelessStatefulDemo()),
-          );
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: 0,
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.people),
+            label: 'Players',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.sports_soccer),
+            label: 'Matches',
+          ),
+        ],
+        onTap: (index) {
+          if (index == 1) {
+            Navigator.push(
+              context,
+              FadeSlideRoute(page: PlayersScreen()),
+            );
+          } else if (index == 2) {
+            Navigator.push(
+              context,
+              FadeSlideRoute(page: MatchesScreen()),
+            );
+          }
         },
-        child: const Icon(Icons.arrow_forward),
       ),
     );
   }
